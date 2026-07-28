@@ -4679,11 +4679,10 @@ let selectedMatchDifficulty = null;
 function renderMatchdayDifficultyPicker(){
   const wrap = document.getElementById("matchdayDifficultyPicker");
   if(!wrap) return;
+  wrap.style.display = "flex"; wrap.style.gap = "8px"; wrap.style.flexWrap = "nowrap";
   wrap.innerHTML = MATCH_DIFFICULTY_LEVELS.map(d=>`
-    <button type="button" class="btn small" data-diff="${d.id}"
-      style="background:${d.bg};color:${d.fg};border:2px solid ${selectedMatchDifficulty===d.id?"var(--accent)":d.border};font-weight:${selectedMatchDifficulty===d.id?"800":"600"};">
-      ${d.label}
-    </button>`).join("");
+    <button type="button" data-diff="${d.id}" title="${d.label}"
+      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:2px solid ${selectedMatchDifficulty===d.id?"var(--accent)":d.border};box-shadow:${selectedMatchDifficulty===d.id?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
   wrap.querySelectorAll("[data-diff]").forEach(btn=>{
     btn.onclick = () => { selectedMatchDifficulty = btn.dataset.diff; renderMatchdayDifficultyPicker(); };
   });
@@ -4964,14 +4963,13 @@ document.getElementById("summaryMatchdaySelect").onchange = (e) => {
 function renderSummaryDifficultyFilter(){
   const wrap = document.getElementById("summaryDifficultyFilterRow");
   if(!wrap) return;
+  wrap.style.display = "flex"; wrap.style.gap = "8px"; wrap.style.flexWrap = "nowrap"; wrap.style.alignItems = "center";
   const allSelected = !summaryDifficultyFilter;
-  wrap.innerHTML = `<button type="button" class="btn small" data-diff-filter=""
-      style="border:2px solid ${allSelected?"var(--accent)":"var(--border)"};font-weight:${allSelected?"800":"600"};">Todas</button>` +
+  wrap.innerHTML = `<button type="button" data-diff-filter="" title="Todas"
+      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:#e5e5e5;border:2px solid ${allSelected?"var(--accent)":"var(--border)"};box-shadow:${allSelected?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;font-size:.7rem;">✕</button>` +
     MATCH_DIFFICULTY_LEVELS.map(d=>`
-    <button type="button" class="btn small" data-diff-filter="${d.id}"
-      style="background:${d.bg};color:${d.fg};border:2px solid ${summaryDifficultyFilter===d.id?"var(--accent)":d.border};font-weight:${summaryDifficultyFilter===d.id?"800":"600"};">
-      ${d.label}
-    </button>`).join("");
+    <button type="button" data-diff-filter="${d.id}" title="${d.label}"
+      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:2px solid ${summaryDifficultyFilter===d.id?"var(--accent)":d.border};box-shadow:${summaryDifficultyFilter===d.id?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
   wrap.querySelectorAll("[data-diff-filter]").forEach(btn=>{
     btn.onclick = () => {
       summaryDifficultyFilter = btn.dataset.diffFilter || null;
@@ -5072,7 +5070,7 @@ function renderMatchdaySummary_(wrap){
       <div class="badge outline" style="padding:8px 12px;">🆚 ${escapeHtml(m.rival||"?")} (${m.homeAway||"-"})</div>
       <div class="badge outline" style="padding:8px 12px;">🏆 ${escapeHtml(m.competition||"-")}</div>
       <div class="badge outline" style="padding:8px 12px;">${m.goalsFor!=null&&m.goalsAgainst!=null ? `⚽ ${m.goalsFor}-${m.goalsAgainst}` : "Sin resultado"}</div>
-      ${diff ? `<div class="badge" style="padding:8px 12px;background:${diff.bg};color:${diff.fg};border:1px solid ${diff.border};">🚦 ${diff.label}</div>` : ""}
+      ${diff ? `<div class="badge outline" title="${diff.label}" style="padding:8px 10px;display:flex;align-items:center;gap:0;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${diff.bg};border:1px solid ${diff.border};"></span></div>` : ""}
     </div>
     <button type="button" class="btn ghost small" onclick="goToMatchdayReport('${m.id}')" style="margin-bottom:12px;">📋 Ir al informe del partido</button>
     ${m.videoUrl ? `<div style="margin-bottom:12px;">${videoEmbedHtml(m.videoUrl)}</div>` : ""}

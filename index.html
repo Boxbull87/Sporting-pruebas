@@ -1108,7 +1108,7 @@ footer{text-align:center;padding:24px;color:var(--muted);font-size:.78rem;}
 
             <h3 style="margin-top:18px;font-size:.9rem;">📋 Informe del partido</h3>
             <p class="muted" style="margin-top:-6px;">Dificultad del rival:</p>
-            <div class="row" id="matchdayDifficultyPicker" style="margin-bottom:10px;flex-wrap:wrap;"></div>
+            <div id="matchdayDifficultyPicker" style="margin-bottom:10px;display:flex;flex-wrap:wrap;"></div>
             <label style="font-size:.85rem;font-weight:600;">Informe / texto libre</label>
             <textarea id="mdReportText" rows="5" style="width:100%;margin-bottom:10px;" placeholder="Escribe aquí lo que quieras sobre el partido..."></textarea>
             <label style="font-size:.85rem;font-weight:600;">Observaciones</label>
@@ -1133,7 +1133,7 @@ footer{text-align:center;padding:24px;color:var(--muted);font-size:.78rem;}
             <select id="summaryMatchdaySelect" class="hidden" style="flex:1;min-width:160px;"></select>
           </div>
           <p class="muted" style="margin:-4px 0 4px 0;font-size:.8rem;">Filtrar por dificultad del rival:</p>
-          <div class="row" id="summaryDifficultyFilterRow" style="margin-bottom:10px;flex-wrap:wrap;"></div>
+          <div id="summaryDifficultyFilterRow" style="margin-bottom:10px;display:flex;flex-wrap:wrap;"></div>
           <div id="teamSummaryContent"><div class="empty">Elige un equipo arriba.</div></div>
           <div class="row" style="margin-top:12px;">
             <button type="button" class="btn ghost small" id="btnExportSummaryPDF">🖨️ Exportar PDF</button>
@@ -4679,10 +4679,10 @@ let selectedMatchDifficulty = null;
 function renderMatchdayDifficultyPicker(){
   const wrap = document.getElementById("matchdayDifficultyPicker");
   if(!wrap) return;
-  wrap.style.display = "flex"; wrap.style.gap = "8px"; wrap.style.flexWrap = "nowrap";
+  wrap.style.display = "flex"; wrap.style.gap = "5px"; wrap.style.flexWrap = "nowrap";
   wrap.innerHTML = MATCH_DIFFICULTY_LEVELS.map(d=>`
     <button type="button" data-diff="${d.id}" title="${d.label}"
-      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:2px solid ${selectedMatchDifficulty===d.id?"var(--accent)":d.border};box-shadow:${selectedMatchDifficulty===d.id?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
+      style="width:24px;height:24px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:1.5px solid ${selectedMatchDifficulty===d.id?"var(--accent)":d.border};box-shadow:${selectedMatchDifficulty===d.id?"0 0 0 1.5px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
   wrap.querySelectorAll("[data-diff]").forEach(btn=>{
     btn.onclick = () => { selectedMatchDifficulty = btn.dataset.diff; renderMatchdayDifficultyPicker(); };
   });
@@ -4963,13 +4963,13 @@ document.getElementById("summaryMatchdaySelect").onchange = (e) => {
 function renderSummaryDifficultyFilter(){
   const wrap = document.getElementById("summaryDifficultyFilterRow");
   if(!wrap) return;
-  wrap.style.display = "flex"; wrap.style.gap = "8px"; wrap.style.flexWrap = "nowrap"; wrap.style.alignItems = "center";
+  wrap.style.display = "flex"; wrap.style.gap = "5px"; wrap.style.flexWrap = "nowrap"; wrap.style.alignItems = "center";
   const allSelected = !summaryDifficultyFilter;
   wrap.innerHTML = `<button type="button" data-diff-filter="" title="Todas"
-      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:#e5e5e5;border:2px solid ${allSelected?"var(--accent)":"var(--border)"};box-shadow:${allSelected?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;font-size:.7rem;">✕</button>` +
+      style="width:24px;height:24px;border-radius:50%;flex:0 0 auto;background:#e5e5e5;border:1.5px solid ${allSelected?"var(--accent)":"var(--border)"};box-shadow:${allSelected?"0 0 0 1.5px var(--accent)":"none"};cursor:pointer;padding:0;font-size:.7rem;line-height:1;">✕</button>` +
     MATCH_DIFFICULTY_LEVELS.map(d=>`
     <button type="button" data-diff-filter="${d.id}" title="${d.label}"
-      style="width:28px;height:28px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:2px solid ${summaryDifficultyFilter===d.id?"var(--accent)":d.border};box-shadow:${summaryDifficultyFilter===d.id?"0 0 0 2px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
+      style="width:24px;height:24px;border-radius:50%;flex:0 0 auto;background:${d.bg};border:1.5px solid ${summaryDifficultyFilter===d.id?"var(--accent)":d.border};box-shadow:${summaryDifficultyFilter===d.id?"0 0 0 1.5px var(--accent)":"none"};cursor:pointer;padding:0;"></button>`).join("");
   wrap.querySelectorAll("[data-diff-filter]").forEach(btn=>{
     btn.onclick = () => {
       summaryDifficultyFilter = btn.dataset.diffFilter || null;
